@@ -4,8 +4,37 @@
  */
 package com.github.twofx.datastructures.persistent;
 
-public class PersistentTreap {
-	public int five() {
-		return 5;
+import com.github.twofx.datastructures.random.IRandomNumberGenerator;
+
+public class PersistentTreap<K extends Comparable<K>, V> {
+
+	private final IRandomNumberGenerator random;
+	private TreapNode<K, V> root;
+
+	public PersistentTreap(IRandomNumberGenerator random) {
+		this.random = random;
 	}
+
+	private PersistentTreap(PersistentTreap<K, V> other) {
+		this.random = other.random;
+		this.root = other.root;
+	}
+
+	@Override
+	public PersistentTreap<K, V> clone() {
+		return new PersistentTreap<>(this);
+	}
+
+	public V get(K key) {
+		if (root == null) {
+			return null;
+		}
+		var node = root.search(key);
+		return node == null ? null : node.getValue();
+	}
+
+	public void put(K key, V value) {
+
+	}
+
 }
